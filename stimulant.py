@@ -366,7 +366,7 @@ def make_text_in_box(text=u'Bwöp!',
 
 def make_dot(outer=(100, 100),
                     inner=(9, 9),
-                    colorback='rgb(225, 225, 225)',
+                    colorback='rgba(225, 225, 225, 0)',
                     colorout='rgb(0, 0, 0)', 
                     colorin='rgb(255, 255, 255)',
                     save=True
@@ -430,7 +430,7 @@ def make_gabor(im=None,
                 math.exp(-0.5*(x/std)**2 - 0.5*(y/std)**2) )
             px[rx + xoff, ry + yoff] = int(i) + px[rx + xoff, ry + yoff] - 127
     if imwasnone:
-        im.save('./gabor_test.png', dpi=(100,100), quality=100, optimize=True)
+        im.save('./gabor_test.png', dpi=(300,300), quality=100, optimize=True)
     return im
             
 def make_tile(char=u'w', 
@@ -653,13 +653,13 @@ def make_uil_background(testloc='./uil.png'):
     lay1draw = ImageDraw.Draw(lay1) 
     lay2 = Image.new('RGB',(B['layer2_s'][0],B['layer2_s'][1]), B['layer2_c'])
     lay2draw = ImageDraw.Draw(lay2)
-    #resize the eye graphic to fit in layer2 (y-based)
+    #resize the graphic to fit in layer2 (y-based)
     logu = Image.open('./dot_element.png');
     eye_x, eye_y = logu.size
     eyefactor = get_resize(got=eye_y, want=B['layer2_s'][1])
     smaller_eye = resize_percent(logu, eyefactor)
     # resize the text grapic
-    logotext = Image.open('./dot_element.png')
+    logotext = Image.open('./gabor_test.png')
     text_x,text_y = logotext.size
     textfactor = get_resize(got=text_y, want=B['layer2_s'][1])
     smaller_text = resize_percent(logotext, textfactor)
@@ -667,7 +667,7 @@ def make_uil_background(testloc='./uil.png'):
     base.paste(lay1,B['layer1_p'])
     base.paste(lay2,B['layer2_p'])
     base.paste(smaller_eye,B['layer2_p'])
-    # add the x-space teken by the eye logo for the next position to paste
+    # add the x-space teken by the logo for the next position to paste
     eye_xs,eye_ys = smaller_eye.size
     adjusted = (B['layer2_p'][0] + eye_xs, B['layer2_p'][1])
     base.paste(smaller_text, adjusted)
@@ -689,8 +689,8 @@ def make_word_sounds(mytextlist,
         myobj.save(savepath + myfname.replace(' ','_') + ".wav")
         print ("saved: " + mytext + " under " + myfname + ".wav")
 
-def make_word_sound(text="hoi",
-                    fname="mooi", 
+def make_word_sound(text,
+                    fname, 
                     language='en',
                     savepath='./',
                     save=False
@@ -709,6 +709,6 @@ if __name__ == '__main__':
     make_training()
     make_neutral_videos()
     make_happy_videos()
-print("__YOYYOYOYhello, placeholder stimulants baked...")
+print("__Hello?, placeholder stimulants baked...?")
 
 
